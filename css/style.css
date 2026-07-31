@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Pure Aqua — Design System
+   Signature motif: the "wave-fill" — a liquid level that rises to show
+   progress (wallet balance, order status, splash load). Water made literal.
+   ========================================================================== */
+
+:root {
+  /* --- color tokens --- */
+  --ocean-900: #0B3D5C;
+  --ocean-700: #0E4E73;
+  --aqua-500: #14A9C9;
+  --aqua-300: #6FD3E6;
+  --foam-50: #F4FAFB;
+  --foam-100: #E7F4F6;
+  --amber-500: #F2A93B;
+  --amber-600: #DB8E1E;
+  --ink-900: #10262E;
+  --mist-500: #7C97A0;
+  --mist-200: #D7E4E7;
+  --danger-500: #D5563F;
+  --success-500: #2E9E6B;
+
+  /* --- type --- */
+  --font-display: 'Poppins', 'Noto Sans Tamil', sans-serif;
+  --font-body: 'Inter', 'Noto Sans Tamil', sans-serif;
+
+  /* --- layout --- */
+  --app-max: 480px;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+  --shadow-card: 0 8px 24px rgba(11, 61, 92, 0.10);
+  --shadow-nav: 0 -4px 20px rgba(11, 61, 92, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ocean-900);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  color: var(--ocean-900);
+  margin: 0;
+  line-height: 1.15;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--font-body); cursor: pointer; }
+
+.app-shell {
+  width: 100%;
+  max-width: var(--app-max);
+  min-height: 100vh;
+  background: var(--foam-50);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 60px rgba(0,0,0,0.25);
+}
+
+.app-main {
+  flex: 1;
+  padding: 20px 20px 96px;
+}
+
+.tamil {
+  font-family: 'Noto Sans Tamil', var(--font-body);
+  font-size: 0.85em;
+  color: var(--mist-500);
+}
+
+.app-header {
+  background: linear-gradient(160deg, var(--ocean-900), var(--ocean-700));
+  color: #fff;
+  padding: 22px 20px 30px;
+  position: relative;
+  overflow: hidden;
+}
+.app-header .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--aqua-300);
+  font-weight: 600;
+}
+.app-header h1 { color: #fff; font-size: 22px; margin-top: 4px; }
+.app-header p { color: rgba(255,255,255,0.72); margin: 6px 0 0; font-size: 14px; }
+.app-header .wave-edge {
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 26px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  width: 100%;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--aqua-500); color: #fff; box-shadow: 0 8px 18px rgba(20,169,201,0.35); }
+.btn-primary:hover { background: #109cba; }
+.btn-amber { background: var(--amber-500); color: var(--ocean-900); box-shadow: 0 8px 18px rgba(242,169,59,0.35); }
+.btn-ghost { background: transparent; color: var(--ocean-900); border: 1.5px solid var(--mist-200); }
+.btn-danger { background: transparent; color: var(--danger-500); border: 1.5px solid rgba(213,86,63,0.3); }
+.btn-sm { padding: 9px 14px; font-size: 13px; width: auto; }
+
+.card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 16px;
+}
+.card-row { display: flex; align-items: center; justify-content: space-between; }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ocean-900);
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  border: 1.5px solid var(--mist-200);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: #fff;
+  color: var(--ink-900);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--aqua-500);
+  box-shadow: 0 0 0 3px rgba(20,169,201,0.15);
+}
+.field-error { color: var(--danger-500); font-size: 12px; margin-top: 5px; display: none; }
+.field-hint { color: var(--mist-500); font-size: 12px; margin-top: 5px; }
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--amber-500);
+  outline-offset: 2px;
+}
+
+.wave-fill {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--ocean-900);
+  isolation: isolate;
+}
+.wave-fill .level {
+  position: absolute;
+  left: -25%; width: 150%;
+  bottom: 0;
+  transition: height 1.1s cubic-bezier(.22,1,.36,1);
+}
+.wave-fill .level svg { display: block; width: 100%; height: 60px; margin-top: -1px; }
+.wave-fill .level .body { height: calc(100% - 40px); margin-top: -1px; background: inherit; }
+.wave-fill .level.aqua { background: var(--aqua-500); }
+.wave-fill .level.aqua svg path { fill: var(--aqua-500); }
+.wave-fill .level.amber { background: var(--amber-500); }
+.wave-fill .level.amber svg path { fill: var(--amber-500); }
+.wave-fill .content { position: relative; z-index: 2; padding: 20px; }
+.wave-anim { animation: wave-drift 7s linear infinite; }
+@keyframes wave-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.33%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-anim { animation: none; }
+  .wave-fill .level { transition: none; }
+}
+
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li {
+  display: flex; gap: 12px;
+  padding-bottom: 18px;
+  position: relative;
+}
+.timeline li:last-child { padding-bottom: 0; }
+.timeline .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--mist-200);
+  margin-top: 3px; flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+.timeline li.done .dot { background: var(--aqua-500); }
+.timeline li:not(:last-child)::before {
+  content: '';
+  position: absolute; left: 5px; top: 15px; bottom: 0;
+  width: 2px; background: var(--mist-200);
+}
+.timeline li.done:not(:last-child)::before { background: var(--aqua-500); }
+.timeline strong { display: block; font-size: 14px; color: var(--ocean-900); }
+.timeline span { font-size: 12px; color: var(--mist-500); }
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: var(--app-max);
+  background: #fff;
+  box-shadow: var(--shadow-nav);
+  display: flex;
+  padding: 10px 6px calc(10px + env(safe-area-inset-bottom));
+  z-index: 20;
+}
+.bottom-nav a {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 600;
+  color: var(--mist-500);
+  padding: 6px 0;
+  border-radius: var(--radius-sm);
+}
+.bottom-nav a.active { color: var(--aqua-500); background: var(--foam-100); }
+.bottom-nav svg { width: 20px; height: 20px; }
+
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; align-items: center; gap: 10px; }
+.between { justify-content: space-between; }
+.muted { color: var(--mist-500); font-size: 13px; }
+.pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.pill-success { background: rgba(46,158,107,0.12); color: var(--success-500); }
+.pill-pending { background: rgba(242,169,59,0.15); color: var(--amber-600); }
+.pill-info { background: rgba(20,169,201,0.12); color: var(--aqua-500); }
+.divider { height: 1px; background: var(--mist-200); margin: 14px 0; border: none; }
+.center-text { text-align: center; }
+.link-inline { color: var(--aqua-500); font-weight: 600; }
+.stepper {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--foam-100); border-radius: 999px; padding: 6px 8px; width: fit-content;
+}
+.stepper button {
+  width: 32px; height: 32px; border-radius: 50%; border: none;
+  background: #fff; color: var(--ocean-900); font-size: 18px; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(11,61,92,0.15);
+}
+.stepper span { min-width: 18px; text-align: center; font-weight: 700; }
+
+.can-card {
+  border: 1.5px solid var(--mist-200);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.can-card.selected { border-color: var(--aqua-500); background: var(--foam-100); }
+.can-card .icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--foam-100); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.can-card .icon svg { width: 24px; height: 24px; color: var(--aqua-500); }
+.can-card .info { flex: 1; }
+.can-card .info strong { display: block; font-size: 14px; color: var(--ocean-900); }
+.can-card .info span { font-size: 12px; color: var(--mist-500); }
+.can-card .price { font-weight: 700; color: var(--ocean-900); font-size: 14px; }
+
+.toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--ocean-900); color: #fff;
+  padding: 12px 20px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  box-shadow: 0 10px 24px rgba(11,61,92,0.3);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 50; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.empty-state { text-align: center; padding: 40px 20px; color: var(--mist-500); }
+.empty-state svg { width: 56px; height: 56px; margin-bottom: 12px; color: var(--mist-200); }
+
+@media (max-width: 380px) {
+  .app-main { padding: 16px 14px 92px; }
+}
