@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wallet — Pure Aqua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header" style="padding-bottom:24px;">
+    <div class="eyebrow">MY WALLET</div>
+    <h1>Wallet</h1>
+    <p class="tamil" style="color:rgba(255,255,255,0.75)">பணப்பை</p>
+    <svg class="wave-edge" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0 15 Q125 0 250 15 T500 15 V30 H0 Z" fill="#F4FAFB"/></svg>
+  </header>
+
+  <main class="app-main" style="padding-top:16px;">
+    <div class="wave-fill" id="walletCard" style="height:150px;">
+      <div class="level amber" id="walletLevel" style="height:0%;">
+        <svg viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-anim" d="M0 20 Q50 0 100 20 T200 20 T300 20 T400 20 T500 20 T600 20 V40 H0 Z"/></svg>
+        <div class="body"></div>
+      </div>
+      <div class="content" style="padding-top:26px;">
+        <div style="color:#fff;">
+          <div style="font-size:12px; opacity:0.8; letter-spacing:0.05em;">AVAILABLE BALANCE</div>
+          <div style="font-size:34px; font-weight:700;" id="walletAmount">₹0</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:14px; margin:20px 0 10px;">Add money</h3>
+    <div class="row" style="gap:8px; margin-bottom:12px;">
+      <button type="button" class="btn btn-ghost btn-sm addAmt" data-amt="100">+₹100</button>
+      <button type="button" class="btn btn-ghost btn-sm addAmt" data-amt="200">+₹200</button>
+      <button type="button" class="btn btn-ghost btn-sm addAmt" data-amt="500">+₹500</button>
+    </div>
+    <div class="field">
+      <input type="number" id="customAmt" placeholder="Enter custom amount" min="1">
+    </div>
+    <button class="btn btn-primary" id="addBtn">Add to wallet</button>
+
+    <h3 style="font-size:14px; margin:24px 0 10px;">Recent orders (debits)</h3>
+    <div id="txList" class="stack"></div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
+    <a href="booking.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2s7 8 7 13a7 7 0 11-14 0c0-5 7-13 7-13z"/></svg>Book</a>
+    <a href="orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>Orders</a>
+    <a href="wallet.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14h2"/></svg>Wallet</a>
+    <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</a>
+  </nav>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  PureAqua.requireAuth();
+
+  function refresh() {
+    const user = PureAqua.currentUser();
+    const pct = Math.min(100, Math.max(6, (user.wallet / 500) * 100));
+    document.getElementById('walletAmount').textContent = paFormatMoney(user.wallet);
+    document.getElementById('walletLevel').style.height = pct + '%';
+
+    const orders = PureAqua.getOrders();
+    const list = document.getElementById('txList');
+    if (!orders.length) {
+      list.innerHTML = '<p class="muted center-text">No transactions yet.</p>';
+    } else {
+      list.innerHTML = orders.slice(0, 8).map(o => `
+        <div class="card" style="margin-bottom:0;">
+          <div class="row between">
+            <div>
+              <strong style="font-size:14px;">${o.canName} × ${o.qty}</strong>
+              <div class="muted">${paTimeAgo(o.placedAt)}</div>
+            </div>
+            <strong style="color:var(--danger-500);">−${paFormatMoney(o.total)}</strong>
+          </div>
+        </div>`).join('');
+    }
+  }
+
+  document.querySelectorAll('.addAmt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      PureAqua.addMoney(Number(btn.dataset.amt));
+      paToast('Money added!');
+      refresh();
+    });
+  });
+
+  document.getElementById('addBtn').addEventListener('click', () => {
+    const val = Number(document.getElementById('customAmt').value);
+    if (!val || val <= 0) { paToast('Enter a valid amount'); return; }
+    PureAqua.addMoney(val);
+    document.getElementById('customAmt').value = '';
+    paToast('Money added!');
+    refresh();
+  });
+
+  refresh();
+  requestAnimationFrame(refresh);
+</script>
+</body>
+</html>

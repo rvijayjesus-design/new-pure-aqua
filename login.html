@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login — Pure Aqua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header" style="background:linear-gradient(180deg, rgba(11,61,92,0.55), rgba(11,61,92,0.92) 75%, var(--ocean-700)), url('images/shop-front.jpg') center/cover no-repeat; min-height:190px; display:flex; flex-direction:column; justify-content:flex-end;">
+    <div class="eyebrow">NEW PURE AQUA</div>
+    <h1>Welcome back</h1>
+    <p class="tamil" style="color:rgba(255,255,255,0.75)">மீண்டும் வரவேற்கிறோம்</p>
+    <svg class="wave-edge" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0 15 Q125 0 250 15 T500 15 V30 H0 Z" fill="#F4FAFB"/></svg>
+  </header>
+
+  <main class="app-main" style="padding-top:26px;">
+    <form id="loginForm" class="stack" novalidate>
+      <div class="field">
+        <label for="phone">Mobile number</label>
+        <input type="tel" id="phone" placeholder="98765 43210" inputmode="numeric" required>
+        <div class="field-error" id="phoneErr">Enter a valid 10-digit number</div>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+        <div class="field-error" id="passErr">Enter your password</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <p class="center-text muted" style="margin-top:18px;">
+      New to Pure Aqua? <a href="register.html" class="link-inline">Create an account</a>
+    </p>
+
+    <div class="card" style="margin-top:24px; background:var(--foam-100); box-shadow:none;">
+      <p class="muted" style="margin:0;">Demo tip: register a new account first — this app stores accounts on your device, there's no shared server yet.</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  PureAqua.redirectIfAuthed('home.html');
+
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value;
+    let valid = true;
+
+    document.getElementById('phoneErr').style.display = 'none';
+    document.getElementById('passErr').style.display = 'none';
+
+    if (!/^\d{10}$/.test(phone)) {
+      document.getElementById('phoneErr').style.display = 'block';
+      valid = false;
+    }
+    if (!password) {
+      document.getElementById('passErr').style.display = 'block';
+      valid = false;
+    }
+    if (!valid) return;
+
+    const res = PureAqua.login({ phone, password });
+    if (res.ok) {
+      window.location.href = 'home.html';
+    } else {
+      paToast(res.error);
+    }
+  });
+</script>
+</body>
+</html>

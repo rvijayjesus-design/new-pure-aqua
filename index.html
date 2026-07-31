@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pure Aqua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // Root entry point: logged-in users skip straight to their dashboard,
+  // everyone else sees the splash screen first.
+  var hasSession = !!localStorage.getItem('pa_session_v1');
+  window.location.replace(hasSession ? 'home.html' : 'splash.html');
+</script>
+</head>
+<body>
+  <noscript>Please enable JavaScript to use Pure Aqua, or open <a href="splash.html">splash.html</a> directly.</noscript>
+</body>
+</html>

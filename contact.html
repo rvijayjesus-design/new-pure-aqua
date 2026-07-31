@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact — Pure Aqua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header" style="padding-bottom:24px;">
+    <a href="profile.html" style="color:rgba(255,255,255,0.8); font-size:13px;">&larr; Back</a>
+    <h1 style="margin-top:10px;">Contact & support</h1>
+    <svg class="wave-edge" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0 15 Q125 0 250 15 T500 15 V30 H0 Z" fill="#F4FAFB"/></svg>
+  </header>
+
+  <main class="app-main" style="padding-top:16px;">
+    <div class="card row" style="gap:14px;">
+      <div class="icon" style="width:40px;height:40px;border-radius:10px;background:var(--foam-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--aqua-500)" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.11 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div><strong style="font-size:14px;">Call support</strong><div class="muted">+91 90000 12345 · 8am–8pm</div></div>
+    </div>
+
+    <div class="card row" style="gap:14px;">
+      <div class="icon" style="width:40px;height:40px;border-radius:10px;background:var(--foam-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--aqua-500)" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+      </div>
+      <div><strong style="font-size:14px;">Email us</strong><div class="muted">support@pureaqua.app</div></div>
+    </div>
+
+    <h3 style="font-size:14px; margin:20px 0 10px;">Send a message</h3>
+    <form id="contactForm" class="stack">
+      <div class="field"><input type="text" id="cname" placeholder="Your name" required></div>
+      <div class="field"><textarea id="cmsg" rows="3" placeholder="How can we help?" required></textarea></div>
+      <button type="submit" class="btn btn-primary">Send message</button>
+    </form>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    this.reset();
+    paToast('Message sent — we\u2019ll get back to you soon');
+  });
+</script>
+</body>
+</html>

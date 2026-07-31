@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home — Pure Aqua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header">
+    <div class="row between">
+      <div>
+        <div class="eyebrow">GOOD TO SEE YOU</div>
+        <h1 data-user-name>Friend</h1>
+      </div>
+      <a href="profile.html" aria-label="Profile" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </a>
+    </div>
+    <svg class="wave-edge" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0 15 Q125 0 250 15 T500 15 V30 H0 Z" fill="#F4FAFB"/></svg>
+  </header>
+
+  <main class="app-main" style="padding-top:16px;">
+
+    <!-- wallet wave-fill card: signature liquid-level motif -->
+    <div class="wave-fill" id="walletCard" style="height:130px;">
+      <div class="level aqua" id="walletLevel" style="height:0%;">
+        <svg viewBox="0 0 400 40" preserveAspectRatio="none"><path class="wave-anim" d="M0 20 Q50 0 100 20 T200 20 T300 20 T400 20 T500 20 T600 20 V40 H0 Z"/></svg>
+        <div class="body"></div>
+      </div>
+      <div class="content">
+        <div class="row between" style="color:#fff;">
+          <div>
+            <div style="font-size:12px; opacity:0.8; letter-spacing:0.05em;">WALLET BALANCE</div>
+            <div style="font-size:28px; font-weight:700;" id="walletAmount">₹0</div>
+          </div>
+          <a href="wallet.html" class="btn btn-amber btn-sm">Add money</a>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:20px 0 10px; font-size:15px;">Quick book</h3>
+    <a href="booking.html" class="card" style="text-decoration:none; display:flex; align-items:center; gap:14px;">
+      <div class="can-card" style="border:none; padding:0; margin:0; flex:1;">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2s7 8 7 13a7 7 0 11-14 0c0-5 7-13 7-13z"/></svg>
+        </div>
+        <div class="info">
+          <strong>Book a 20L can</strong>
+          <span>Delivered in as little as 2 hours</span>
+        </div>
+      </div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--mist-500)" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <h3 style="margin:20px 0 10px; font-size:15px;">Recent orders</h3>
+    <div id="recentOrders" class="stack"></div>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
+    <a href="booking.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2s7 8 7 13a7 7 0 11-14 0c0-5 7-13 7-13z"/></svg>Book</a>
+    <a href="orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>Orders</a>
+    <a href="wallet.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14h2"/></svg>Wallet</a>
+    <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</a>
+  </nav>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  PureAqua.requireAuth();
+  const user = PureAqua.currentUser();
+
+  const walletPct = Math.min(100, Math.max(6, (user.wallet / 500) * 100));
+  document.getElementById('walletAmount').textContent = paFormatMoney(user.wallet);
+  requestAnimationFrame(() => {
+    document.getElementById('walletLevel').style.height = walletPct + '%';
+  });
+
+  const orders = PureAqua.getOrders().slice(0, 3);
+  const list = document.getElementById('recentOrders');
+  if (!orders.length) {
+    list.innerHTML = '<div class="card empty-state" style="margin:0;">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>' +
+      '<p>No orders yet. Book your first can!</p></div>';
+  } else {
+    list.innerHTML = orders.map(o => `
+      <div class="card" style="margin-bottom:0;">
+        <div class="row between">
+          <div>
+            <strong style="font-size:14px;">${o.canName} × ${o.qty}</strong>
+            <div class="muted">${paTimeAgo(o.placedAt)}</div>
+          </div>
+          <span class="pill ${o.status === 'delivered' ? 'pill-success' : 'pill-pending'}">${o.status.replace(/_/g,' ')}</span>
+        </div>
+      </div>`).join('');
+  }
+</script>
+</body>
+</html>
