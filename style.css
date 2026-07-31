@@ -1,0 +1,42 @@
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+}
+
+header{
+    background:#0099cc;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.logo{
+    width:100px;
+}
+
+.banner img{
+    width:100%;
+}
+
+section{
+    background:white;
+    margin:15px;
+    padding:20px;
+    border-radius:10px;
+}
+
+h2{
+    color:#0099cc;
+}
+
+ul{
+    padding-left:20px;
+}
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
